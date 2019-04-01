@@ -1,6 +1,7 @@
 package com.zyz.shopping.controller;
 
 import com.zyz.shopping.dao.BookRepository;
+import com.zyz.shopping.http.DuangDuangResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class BookController {
     private BookRepository bookRepository;
 
     @GetMapping("")
-    public List listAll() {
-        return bookRepository.findAll();
+    public DuangDuangResponse<List> listAll() {
+        return DuangDuangResponse.success(bookRepository.findAll());
     }
 }
