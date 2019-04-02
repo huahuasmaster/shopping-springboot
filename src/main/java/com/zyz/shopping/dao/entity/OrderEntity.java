@@ -1,22 +1,27 @@
 package com.zyz.shopping.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_order", schema = "duangduang", catalog = "")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class OrderEntity {
     private int id;
     private String orderNum;
-    private Integer buyerId;
+    private int buyerId;
+    private int bookId;
+    private int addressId;
     private Integer tradeStatus;
     private Integer payId;
     private String onlinePlatform;
     private Integer payStatus;
-    private Integer orderAmount;
+    private Double orderAmount;
     private Timestamp payDate;
-    private Integer outerTradeNo;
+    private String outerTradeNo;
     private Timestamp createDate;
     private String remark;
     private Byte requireInvoice;
@@ -43,12 +48,32 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "buyer_id")
-    public Integer getBuyerId() {
+    public int getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(Integer buyerId) {
+    public void setBuyerId(int buyerId) {
         this.buyerId = buyerId;
+    }
+
+    @Basic
+    @Column(name = "book_id")
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    @Basic
+    @Column(name = "address_id")
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     @Basic
@@ -93,11 +118,11 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "order_amount")
-    public Integer getOrderAmount() {
+    public Double getOrderAmount() {
         return orderAmount;
     }
 
-    public void setOrderAmount(Integer orderAmount) {
+    public void setOrderAmount(Double orderAmount) {
         this.orderAmount = orderAmount;
     }
 
@@ -113,11 +138,11 @@ public class OrderEntity {
 
     @Basic
     @Column(name = "outer_trade_no")
-    public Integer getOuterTradeNo() {
+    public String getOuterTradeNo() {
         return outerTradeNo;
     }
 
-    public void setOuterTradeNo(Integer outerTradeNo) {
+    public void setOuterTradeNo(String outerTradeNo) {
         this.outerTradeNo = outerTradeNo;
     }
 
@@ -157,8 +182,10 @@ public class OrderEntity {
         if (o == null || getClass() != o.getClass()) return false;
         OrderEntity that = (OrderEntity) o;
         return id == that.id &&
+                buyerId == that.buyerId &&
+                bookId == that.bookId &&
+                addressId == that.addressId &&
                 Objects.equals(orderNum, that.orderNum) &&
-                Objects.equals(buyerId, that.buyerId) &&
                 Objects.equals(tradeStatus, that.tradeStatus) &&
                 Objects.equals(payId, that.payId) &&
                 Objects.equals(onlinePlatform, that.onlinePlatform) &&
@@ -173,6 +200,6 @@ public class OrderEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderNum, buyerId, tradeStatus, payId, onlinePlatform, payStatus, orderAmount, payDate, outerTradeNo, createDate, remark, requireInvoice);
+        return Objects.hash(id, orderNum, buyerId, bookId, addressId, tradeStatus, payId, onlinePlatform, payStatus, orderAmount, payDate, outerTradeNo, createDate, remark, requireInvoice);
     }
 }

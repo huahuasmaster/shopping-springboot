@@ -1,11 +1,14 @@
 package com.zyz.shopping.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_book", schema = "duangduang", catalog = "")
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class BookEntity {
     private int id;
     private String title;
