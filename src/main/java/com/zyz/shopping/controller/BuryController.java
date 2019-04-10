@@ -3,6 +3,7 @@ package com.zyz.shopping.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.zyz.shopping.bury.BuryDTO;
 import com.zyz.shopping.bury.KafkaUtil;
+import com.zyz.shopping.http.DuangDuangResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +17,10 @@ public class BuryController {
     @Autowired
     private KafkaUtil kafkaUtil;
 
-    @PostMapping("/")
-    public Integer bury(@RequestBody BuryDTO buryDTO) {
+    @PostMapping("")
+    public DuangDuangResponse bury(@RequestBody BuryDTO buryDTO) {
         String content = JSONObject.toJSONString(buryDTO);
         kafkaUtil.send(content);
-        return 1;
+        return DuangDuangResponse.success(1);
     }
 }
