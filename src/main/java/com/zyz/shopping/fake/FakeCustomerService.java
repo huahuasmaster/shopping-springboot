@@ -36,11 +36,11 @@ public class FakeCustomerService {
                     log.info(JSON.toJSONString(orderVO));
 
                     orderService.save(orderVO);
-                    Integer sleep = getRandom(600, 1200);
-                    log.info("下单完成，开始睡眠:{}秒", sleep);
+                    Integer sleep = getRandom(100 * 1000 , 300 * 1000);
+                    log.info("下单完成，开始睡眠:{}秒", sleep / 1000);
 
                     //睡眠10~60s
-                    Thread.sleep(getRandom(10, 50) * 1000L);
+                    Thread.sleep(sleep);
                 } catch (Exception e) {
                     log.error("出现错误", e);
                 }
