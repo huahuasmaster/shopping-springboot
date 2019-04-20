@@ -7,6 +7,14 @@ import java.util.Map;
 
 @Data
 public class BuryDTO {
+    public static BuryDTO fromBase(Integer userId, String event, String path, Long date) {
+        BuryDTO buryDTO = new BuryDTO();
+        buryDTO.setUserId(userId);
+        buryDTO.setTriggerDate(date);
+        buryDTO.setEvent(event);
+        buryDTO.setPath(path);
+        return buryDTO;
+    }
 
     @ApiModelProperty("事件名称")
     private String event;
