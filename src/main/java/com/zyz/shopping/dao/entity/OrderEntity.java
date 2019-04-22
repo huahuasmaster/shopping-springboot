@@ -1,18 +1,16 @@
 package com.zyz.shopping.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "t_order", schema = "duangduang", catalog = "")
-@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class OrderEntity {
     private int id;
     private String orderNum;
     private int buyerId;
+    private String bookName;
     private int bookId;
     private int addressId;
     private Integer tradeStatus;
@@ -54,6 +52,16 @@ public class OrderEntity {
 
     public void setBuyerId(int buyerId) {
         this.buyerId = buyerId;
+    }
+
+    @Basic
+    @Column(name = "book_name")
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
 
     @Basic
@@ -186,6 +194,7 @@ public class OrderEntity {
                 bookId == that.bookId &&
                 addressId == that.addressId &&
                 Objects.equals(orderNum, that.orderNum) &&
+                Objects.equals(bookName, that.bookName) &&
                 Objects.equals(tradeStatus, that.tradeStatus) &&
                 Objects.equals(payId, that.payId) &&
                 Objects.equals(onlinePlatform, that.onlinePlatform) &&
@@ -200,6 +209,6 @@ public class OrderEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderNum, buyerId, bookId, addressId, tradeStatus, payId, onlinePlatform, payStatus, orderAmount, payDate, outerTradeNo, createDate, remark, requireInvoice);
+        return Objects.hash(id, orderNum, buyerId, bookName, bookId, addressId, tradeStatus, payId, onlinePlatform, payStatus, orderAmount, payDate, outerTradeNo, createDate, remark, requireInvoice);
     }
 }

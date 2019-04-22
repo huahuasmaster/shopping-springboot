@@ -11,6 +11,8 @@ public class OrderVO {
 
     private Integer bookId;
 
+    private String bookName;
+
     private Integer addressId;
 
     private Double orderAmount;

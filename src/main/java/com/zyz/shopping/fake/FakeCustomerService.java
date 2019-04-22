@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -69,6 +68,7 @@ public class FakeCustomerService {
                 OrderVO orderVO = new OrderVO();
                 orderVO.setAddressId(getRandom(1, 10));
                 orderVO.setBookId(entity.getId());
+                orderVO.setBookName(entity.getName());
                 orderVO.setBuyerId(getRandom(1, 10));
                 orderVO.setOnlinePlatform(getRandom(1, 5).toString());
                 orderVO.setOrderAmount(entity.getPrice().doubleValue());
@@ -123,6 +123,7 @@ public class FakeCustomerService {
                 log.info("开始模拟支付操作");
                 BuryDTO tryPay = BuryDTO.fromBase(orderVO.getBuyerId(),"try_pay", "/buy/" + orderVO.getBookId(), System.currentTimeMillis());
                 injectMap(tryPay, "params", payVO);
+                kafkaUtil.send(JSON.toJSONString(tryPay));
 
 
                 log.info("用户{}的购买操作已全部结束", orderVO.getBuyerId());

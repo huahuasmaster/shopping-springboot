@@ -33,6 +33,7 @@ public class OrderService {
         orderEntity.setOrderNum(orderNum);
         orderEntity.setTradeStatus(0);
         orderEntity.setPayStatus(0);
+        orderEntity.setBookName(orderVO.getBookName());
         orderEntity.setRequireInvoice(orderVO.getRequireInvoice() ? Byte.parseByte("1") : Byte.parseByte("0"));
         log.info("即将存入订单表:{}", JSON.toJSONString(orderEntity));
         orderRepository.save(orderEntity);
