@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -32,6 +33,8 @@ public class FakeCustomerService {
     private ExecutorService executor;
 
     private List<BookEntity> bookEntities;
+
+    private List<String> reasons = Arrays.asList("忘记使用优惠卷","信息填写错误重新买","我不想买了","其他原因");
 
 
     @Autowired
@@ -114,9 +117,12 @@ public class FakeCustomerService {
                 injectMap(tryPlaceOrder, "params", orderVO);
                 kafkaUtil.send(JSON.toJSONString(tryPlaceOrder));
                 orderService.save(orderVO);
-                if (!wannaContinue(90)) {
+                if (!wannaContinue(60)) {
                     log.info("下单后放弃支付");
-                    return;
+                    BuryDTO cancelOrder = BuryDTO.fromBase(orderVO.getBuyerId(), "cancel_order", "/buy/" + orderVO.getBookId(), System.currentTimeMillis());
+                    String reason = reasons.get(getRandom(0, reasons.size()));
+                    injectMap(cancelOrder, "reason", reason);
+                    kafkaUtil.send(JSON.toJSONString(cancelOrder));
                 }
                 Thread.sleep((getRandom(7,12) * 1000));
 
