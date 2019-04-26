@@ -66,7 +66,7 @@ public class FakeCustomerService {
     private Runnable getTask() {
         return () -> {
             try {
-                BookEntity entity = bookEntities.get(getRandom(0, bookEntities.size() - 1));
+                BookEntity entity = bookEntities.get(getRandom(0, bookEntities.size()));
 
                 OrderVO orderVO = new OrderVO();
                 orderVO.setAddressId(getRandom(1, 10));
